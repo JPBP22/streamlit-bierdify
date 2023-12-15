@@ -8,15 +8,19 @@ def compare_predictions(predictions_csv_path, ground_truth_csv_path):
     predictions_df = read_csv(predictions_csv_path)
     ground_truth_df = read_csv(ground_truth_csv_path)
 
-    # Ensure both DataFrames are sorted by frame index (assuming a column 'frame_index' exists)
-    predictions_df.sort_values('frame_index', inplace=True)
-    ground_truth_df.sort_values('frame_index', inplace=True)
+    # Column names for frame index in each CSV
+    predictions_frame_column = 'frame_index'
+    ground_truth_frame_column = 'frame'
 
-    # Merge the DataFrames on frame index
-    merged_df = pd.merge(predictions_df, ground_truth_df, on='frame_index', suffixes=('_pred', '_gt'))
+    # Ensure both DataFrames are sorted by their respective frame index
+    predictions_df.sort_values(predictions_frame_column, inplace=True)
+    ground_truth_df.sort_values(ground_truth_frame_column, inplace=True)
+
+    # Merge the DataFrames on their respective frame index columns
+    merged_df = pd.merge(predictions_df, ground_truth_df, left_on=predictions_frame_column, right_on=ground_truth_frame_column, suffixes=('_pred', '_gt'))
 
     # Compare predictions with ground truth and calculate accuracy
-    merged_df['correct_prediction'] = merged_df['predictions'] == merged_df['label']
+    merged_df['correct_prediction'] = merged_df['prediction'] == merged_df['label']
     accuracy = merged_df['correct_prediction'].mean()
 
     return accuracy, merged_df
