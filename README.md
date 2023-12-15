@@ -1,1 +1,1 @@
-#Auto Trimmer for golf videos(Bierdify)
+Auto Trimmer for golf videos(Bierdify)
