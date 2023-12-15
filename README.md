@@ -117,4 +117,28 @@ Return Value:
 
 The function returns the path to the saved trimmed video file.
 
+# BierdifyModeloV7.ipynb
+
+Installation and Setup
+Dependency Installation: The notebook begins with the installation of the joblib package, crucial for model serialization.
+Google Colab Drive Mounting: Code is provided to mount a Google Colab drive for accessing files stored in Google Drive.
+
+Data Preprocessing
+Data Import: Paths to various CSV files are defined for data import. It includes code to read and combine data from these files into a single DataFrame.
+Data Cleaning and Preparation: The notebook includes steps for data cleaning, such as dropping unnecessary columns and remapping labels, ensuring the data is ready for model training.
+
+Feature Engineering
+Coordinate Extraction: A custom function is implemented to extract coordinates from the data, indicating an emphasis on spatial analysis.
+Relative Position Calculation: The notebook contains calculations for relative positions, hinting at the analysis of positional relationships in the dataset.
+
+Model Training
+XGBoost Classifier: A significant portion of the notebook is dedicated to training an XGBoost classifier, including hyperparameter tuning and model fitting.
+RandomForest Classifier: There is also a mention of testing with a RandomForest classifier, suggesting a comparative approach to model selection.
+
+Model Evaluation and Refinement
+Prediction Refinement Functions: Custom functions are provided to refine predictions based on specific rules and average frame counts.
+Evaluation Metrics: The notebook includes code for calculating accuracy and generating classification reports, indicating a thorough evaluation approach.
+
+Serialization and Reusability
+Model Saving and Loading: Code snippets for saving and loading the trained model using joblib are present, highlighting the notebook's focus on model reusability.
 
