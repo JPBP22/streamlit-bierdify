@@ -2,7 +2,7 @@ import joblib
 import numpy as np
 import pandas as pd
 
-model_path = r"C:\Users\struc\Desktop\gradio-bierdify\modelv7.joblib"
+model_path = r"C:\Users\struc\Documents\GitHub\streamlit-bierdify\straemlit-bierdify\modelv7.joblib"
 
 def load_model(model_path):
     # Load and return the model

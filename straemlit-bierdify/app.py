@@ -11,6 +11,8 @@ from csv_processing import process_csv
 from model_predictions import load_model as load_prediction_model, make_predictions  # Renamed load_model
 from model_predictions import model_path as model_path
 from trimmer import trim_video
+from ground_truth import compare_predictions
+
 
 # Initialize session state for processed files
 if 'processed_video' not in st.session_state:
@@ -117,6 +119,17 @@ if 'video_processed' not in st.session_state:
 
 # File uploader and process button
 uploaded_file = st.file_uploader("Upload a video", type=["mp4", "avi", "mov"], key="file_uploader")
+
+
+# Insert the ground truth CSV uploader here
+ground_truth_file = st.file_uploader("Upload Ground Truth CSV", type=["csv"], key="ground_truth_uploader")
+
+if ground_truth_file is not None:
+    ground_truth_path = os.path.join(get_stable_temp_path(), "ground_truth.csv")
+    with open(ground_truth_path, 'wb') as f:
+        f.write(ground_truth_file.read())
+    st.session_state['ground_truth_path'] = ground_truth_path
+
 process_button = st.button("Process Video")
 
 if process_button and uploaded_file is not None and not st.session_state.get('video_processed', False):
@@ -203,5 +216,21 @@ if compare_videos_button:
         st.video(st.session_state.trimmed_video)
     else:
         st.error("Please upload a video, make predictions, and trim the video before comparing.")
+
+# ... [existing code for processing and predictions] ...
+
+# Button to calculate IoU
+calculate_iou_button = st.button("Calculate IoU")
+
+if calculate_iou_button:
+    if 'csv_output_path' in st.session_state and 'ground_truth_path' in st.session_state:
+        # Call the comparison function
+        accuracy, comparison_df = compare_predictions(st.session_state['csv_output_path'], st.session_state['ground_truth_path'])
+        
+        # Display the accuracy as a percentage
+        st.write(f"IoU Accuracy: {accuracy * 100:.2f}%")
+    else:
+        st.error("Please ensure both prediction CSV and ground truth CSV are available before calculating IoU.")
+
 
 # ... [rest of your code] ...
